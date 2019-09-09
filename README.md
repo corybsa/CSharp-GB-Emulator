@@ -1,1 +1,1 @@
-# C-GBA-Emulator
+# C-GB-Emulator
