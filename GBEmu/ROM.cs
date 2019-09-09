@@ -9,18 +9,18 @@ using System.Windows.Forms;
 namespace GBEmu
 {
     class ROM
-	{
+    {
         // offsets
         private ushort RomOffsetName = 0x134;
-		private ushort RomOffsetGameboyColor = 0x143;
-		private ushort RomOffsetSuperGameboy = 0x146;
+        private ushort RomOffsetGameboyColor = 0x143;
+        private ushort RomOffsetSuperGameboy = 0x146;
         private ushort RomOffsetType = 0x147;
         private ushort RomOffsetRomSize = 0x148;
         private ushort RomOffsetRamSize = 0x149;
 
         // internal stuff
         private byte[] Header { get; set; }
-		private string InternalName { get; set; }
+        private string InternalName { get; set; }
         private ROMInfo.ROMSize InternalROMSize { get; set; }
         private ROMInfo.ROMType InternalROMType { get; set; }
         private RAMInfo.RAMSize InternalRAMSize { get; set; }
@@ -63,22 +63,22 @@ namespace GBEmu
                     }
                 }
 
-				// Get name of ROM
+                // Get name of ROM
                 InternalName = name.ToString().Replace("\0", "");
                 Log.AppendText($"Internal ROM name: {InternalName}\n");
 
-				// Check for Gameboy Color
-				if(Header[RomOffsetGameboyColor] == 0x80) {
-					throw new Exception("Gameboy Color ROMs are not supported.\n");
-				}
+                // Check for Gameboy Color
+                if(Header[RomOffsetGameboyColor] == 0x80) {
+                    throw new Exception("Gameboy Color ROMs are not supported.\n");
+                }
 
-				// Check for Super Gameboy
-				if(Header[RomOffsetSuperGameboy] == 0x03)
-				{
-					throw new Exception("Super Gameboy ROMs are not supported.\n");
-				}
+                // Check for Super Gameboy
+                if(Header[RomOffsetSuperGameboy] == 0x03)
+                {
+                    throw new Exception("Super Gameboy ROMs are not supported.\n");
+                }
 
-				// Get type of ROM
+                // Get type of ROM
                 InternalROMType = ROMInfo.GetType(Header[RomOffsetType]);
 
                 if(InternalROMType.Text == "")
@@ -93,7 +93,7 @@ namespace GBEmu
                     throw new Exception("Only 32KB games with no mappers are supported.\n");
                 }
 
-				// Get ROM size
+                // Get ROM size
                 InternalROMSize = ROMInfo.GetSize(Header[RomOffsetRomSize]);
                 Log.AppendText($"ROM size: {InternalROMSize.Size}KB\n");
 
@@ -107,11 +107,11 @@ namespace GBEmu
                     throw new Exception("ROM filesize does not equal ROM size.\n");
                 }
 
-				// Get ROM's RAM size
+                // Get ROM's RAM size
                 InternalRAMSize = RAMInfo.GetSize(Header[RomOffsetRamSize]);
                 Log.AppendText($"RAM size: {InternalRAMSize.Size}\n");
 
-				// Load ROM into Gameboy memory
+                // Load ROM into Gameboy memory
                 File.Read(Memory.Cartridge, 0, InternalROMSize.Size * 1024);
 
                 retval = true;
@@ -128,5 +128,5 @@ namespace GBEmu
 
             return retval;
         }
-	}
+    }
 }

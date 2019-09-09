@@ -61,17 +61,17 @@ namespace GBEmu
                         disassembler.file = file;
                         disassembler.pc = 0x100; // On power-up the Gameboy's PC is set to 0x100
 
-						//disassembler.Disassemble();
+                        //disassembler.Disassemble();
 
-						Thread thread = new Thread(disassembler.Disassemble);
-						
-						tbLog.AppendText("Disassembly can take some time.\nPlease wait while this process executes...\n");
-						thread.Start();
-						thread.Join();
-						tbLog.AppendText("done");
-						StreamWriter sw = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test.txt"));
-						sw.Write(disassembler.sb.ToString());
-					}
+                        Thread thread = new Thread(disassembler.Disassemble);
+                        
+                        tbLog.AppendText("Disassembly can take some time.\nPlease wait while this process executes...\n");
+                        thread.Start();
+                        thread.Join();
+                        tbLog.AppendText("done");
+                        StreamWriter sw = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test.txt"));
+                        sw.Write(disassembler.sb.ToString());
+                    }
                     catch(Exception ex)
                     {
                         tbLog.AppendText($"{ex.Message}\n");

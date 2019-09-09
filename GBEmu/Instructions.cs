@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace GBEmu
 {
-	static class Instructions
-	{
-		static public Dictionary<byte, Instruction8bit> GB8bitInstructions = new Dictionary<byte, Instruction8bit>();
+    static class Instructions
+    {
+        static public Dictionary<byte, Instruction8bit> GB8bitInstructions = new Dictionary<byte, Instruction8bit>();
         static public Dictionary<ushort, Instruction16bit> GB16bitInstructions = new Dictionary<ushort, Instruction16bit>();
 
         static Instructions()
-		{
-			/***************************************************************************
-										8 Bit Instructions
-			***************************************************************************/
+        {
+            /***************************************************************************
+                                        8 Bit Instructions
+            ***************************************************************************/
 
-			GB8bitInstructions.Add(0x00, new Instruction8bit(0x00, "NOP", 1, 4));
+            GB8bitInstructions.Add(0x00, new Instruction8bit(0x00, "NOP", 1, 4));
             GB8bitInstructions.Add(0x01, new Instruction8bit(0x01, "LD BC,**", 3, 12));
             GB8bitInstructions.Add(0x02, new Instruction8bit(0x02, "LD (BC),A", 1, 8));
             GB8bitInstructions.Add(0x03, new Instruction8bit(0x03, "INC BC", 1, 8));
@@ -288,9 +288,9 @@ namespace GBEmu
             GB8bitInstructions.Add(0xFE, new Instruction8bit(0xFE, "CP *", 2, 1));
             GB8bitInstructions.Add(0xFF, new Instruction8bit(0xFF, "RST 38H", 1, 1));
 
-			/***************************************************************************
-										16 Bit Instructions
-			***************************************************************************/
+            /***************************************************************************
+                                    16 Bit Instructions
+            ***************************************************************************/
 
             GB16bitInstructions.Add(0xCB00, new Instruction16bit(0xCB00, "RLC B", 2, 1));
             GB16bitInstructions.Add(0xCB01, new Instruction16bit(0xCB01, "RLC C", 2, 1));
@@ -565,42 +565,42 @@ namespace GBEmu
             GB16bitInstructions.Add(0xCBFF, new Instruction16bit(0xCBFF, "SET 7,A", 2, 1));
         }
 
-		static public Instruction8bit Get8bitInstruction(byte code, byte op1, byte op2)
-		{
-			Instruction8bit instruction = GB8bitInstructions[code];
-			string operation = instruction.GetOperation();
-			int index;
+        static public Instruction8bit Get8bitInstruction(byte code, byte op1, byte op2)
+        {
+            Instruction8bit instruction = GB8bitInstructions[code];
+            string operation = instruction.GetOperation();
+            int index;
 
-			try
-			{
-				if(op1 > 0x00)
-				{
-					index = operation.IndexOf("*");
-					operation = operation.Remove(index, 1);
-					operation = operation.Insert(index, BitConverter.ToString(new byte[] { op1 }));
-					instruction = new Instruction8bit(code, operation, GB8bitInstructions[code].size, GB8bitInstructions[code].cycles);
-				}
+            try
+            {
+                if(op1 > 0x00)
+                {
+                    index = operation.IndexOf("*");
+                    operation = operation.Remove(index, 1);
+                    operation = operation.Insert(index, BitConverter.ToString(new byte[] { op1 }));
+                    instruction = new Instruction8bit(code, operation, GB8bitInstructions[code].size, GB8bitInstructions[code].cycles);
+                }
 
-				// if op2 is not null or empty
-				if(op2 > 0x00)
-				{
-					index = operation.IndexOf("*");
-					operation = operation.Remove(index, 1);
-					operation = operation.Insert(index, BitConverter.ToString(new byte[] { op2 }));
-					instruction = new Instruction8bit(code, operation, GB8bitInstructions[code].size, GB8bitInstructions[code].cycles);
-				}
-			}
-			catch(Exception ex)
-			{
-				instruction = new Instruction8bit(code, $"Opcode not found", int.MaxValue, 0);
-			}
+                // if op2 is not null or empty
+                if(op2 > 0x00)
+                {
+                    index = operation.IndexOf("*");
+                    operation = operation.Remove(index, 1);
+                    operation = operation.Insert(index, BitConverter.ToString(new byte[] { op2 }));
+                    instruction = new Instruction8bit(code, operation, GB8bitInstructions[code].size, GB8bitInstructions[code].cycles);
+                }
+            }
+            catch(Exception ex)
+            {
+                instruction = new Instruction8bit(code, $"Opcode not found", int.MaxValue, 0);
+            }
 
-			return instruction;
-		}
+            return instruction;
+        }
 
         static public Instruction16bit Get16bitInstruction(byte code, byte op1, byte op2)
         {
             return new Instruction16bit(0x00, "nothing", int.MaxValue, 0);
         }
-	}
+    }
 }

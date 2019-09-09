@@ -7,34 +7,34 @@ using System.Threading.Tasks;
 namespace GBEmu
 {
     class Instruction8bit
-	{
-		public byte code { get; set; }
-		public string optxt { get; set; }
-		public int size { get; set; }
+    {
+        public byte code { get; set; }
+        public string optxt { get; set; }
+        public int size { get; set; }
         public int cycles { get; set; }
 
-		public Instruction8bit(byte code, string optxt, int size, int cycles)
-		{
-			this.code = code;
-			this.optxt = optxt;
-			this.size = size;
+        public Instruction8bit(byte code, string optxt, int size, int cycles)
+        {
+            this.code = code;
+            this.optxt = optxt;
+            this.size = size;
             this.cycles = cycles;
-		}
+        }
 
-		public byte GetCode()
-		{
-			return code;
-		}
+        public byte GetCode()
+        {
+            return code;
+        }
 
-		public string GetOperation()
-		{
-			return optxt;
-		}
+        public string GetOperation()
+        {
+            return optxt;
+        }
 
-		public int GetByteSize()
-		{
-			return size;
-		}
+        public int GetByteSize()
+        {
+            return size;
+        }
 
         public int GetCycles()
         {
@@ -54,7 +54,7 @@ namespace GBEmu
                 
             }
         }
-	}
+    }
 
     class Instruction16bit
     {
