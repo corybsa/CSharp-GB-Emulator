@@ -1,4 +1,4 @@
-# C-GB-Emulator
+# C# GB Emulator
 A project I started back in 2016 and never finished.
 
 I think I remember reading somewhere that C# wouldn't be a good language to write an emulator. I wanted to prove them wrong.
